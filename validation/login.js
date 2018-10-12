@@ -21,4 +21,4 @@ module.exports = function validateLoginInput(data){
         errors: errors,
         isValid: isEmpty(errors)
     }
-}
+};

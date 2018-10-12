@@ -39,4 +39,4 @@ module.exports = function validateRegisterInput(data){
         errors: errors,
         isValid: isEmpty(errors)
     }
-}
+};
