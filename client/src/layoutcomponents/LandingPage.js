@@ -15,7 +15,7 @@ class LandingPage extends Component {
                                 Access all your music streaming services in one place. </p>
                                 <hr/>
                                 <Link to="/register" className="btn btn-lg btn-info mr-2">
-                                    Sign Up
+                                    Register
                                 </Link>
                                 <Link to="/login" className="btn btn-lg btn-secondary">Login</Link>
                             </div>
