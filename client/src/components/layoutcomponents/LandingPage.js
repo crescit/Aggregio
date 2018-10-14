@@ -1,7 +1,12 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-
+import { connect } from 'react-redux';
 class LandingPage extends Component {
+    componentDidMount(){
+        if(this.props.auth.isAuthenticated){
+            this.props.history.push('/main');
+        }
+    }
     render(){
         return(
             <div className="landing">
@@ -26,4 +31,8 @@ class LandingPage extends Component {
         );
     }
 }
-export default LandingPage;
+const mapStateToProps = (state) => ({
+    auth: state.auth,
+    errors: state.errors
+});
+export default connect(mapStateToProps)(LandingPage);

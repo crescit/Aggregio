@@ -6,13 +6,6 @@ import {connect} from 'react-redux';
 import { registerUser} from '../../actions/authActions';
 
 class Register extends Component {
-    initState = {
-        name: '',
-        email: '',
-        password: '',
-        password2: '',
-        errors: {}
-    };
     constructor(){
         super();
         this.state = {
@@ -27,7 +20,7 @@ class Register extends Component {
     };
     componentDidMount(){
         if(this.props.auth.isAuthenticated){
-            this.props.history.push('/dashboard');
+            this.props.history.push('/main');
         }
     };
     componentWillReceiveProps(nextProps){
