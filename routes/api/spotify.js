@@ -2,17 +2,21 @@ const express = require('express');
 const router = express.Router();
 const spotifykeys = require('../../config/spotifykeys');
 var querystring = require('querystring');
-const axios = require('axios');
+var cors=require('cors');
 const request = require('request');
+var axios = require('axios');
+var cookieParser = require('cookie-parser');
 
 const client_id = spotifykeys.spotifyClientId;
 const client_secret = spotifykeys.spotifyClientSecret;
 const redirect_uri = "http://localhost:5000/api/spotify/callback";
+
 /**
  * Generates a random string containing numbers and letters
  * @param  {number} length The length of the string
  * @return {string} The generated string
  */
+
 var generateRandomString = function(length) {
     var text = '';
     var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -25,25 +29,69 @@ var generateRandomString = function(length) {
 
 var stateKey = 'spotify_auth_state';
 
-
+router.use(express.static(__dirname + '/public')).use(cors()).use(cookieParser());
 
 router.get('/login', function(req, res) {
 
     var state = generateRandomString(16);
     res.cookie(stateKey, state);
-
     // your application requests authorization
-    var scope = 'user-read-private user-read-email';
+    var scope = 'user-read-private user-read-playback-state user-read-email';
+
     res.redirect('https://accounts.spotify.com/authorize?' +
         querystring.stringify({
             response_type: 'code',
             client_id: client_id,
             scope: scope,
             redirect_uri: redirect_uri,
-            state: state
+            state: state,
         }));
-});
 
+
+
+});
+/*
+router.get('/callback', function(req, res) {
+    // your application requests refresh and access tokens
+    // after checking the state parameter
+
+    var code = req.query.code || null;
+    var state = req.query.state || null;
+    var storedState = req.cookies ? req.cookies[stateKey] : null;
+
+    if (state === null || state !== storedState) {
+        res.redirect('http://localhost:3000/#' +
+            querystring.stringify({
+                error: 'state_mismatch'
+            }));
+    } else {
+        res.clearCookie(stateKey);
+        var authOptions = {
+            url: 'https://accounts.spotify.com/api/token',
+            form: {
+                code: code,
+                redirect_uri: redirect_uri,
+                grant_type: 'authorization_code'
+            },
+            headers: {
+                'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
+            },
+            json: true
+        };
+
+        request.post(authOptions, function(error, response, body) {
+            if (!error && response.statusCode === 200) {
+
+                var access_token = body.access_token,
+                    refresh_token = body.refresh_token;
+                return res.json({access_token: access_token, refresh_token: refresh_token});
+            } else {
+                return res.json({error: 'invalid_token'});
+            }
+        });
+    }
+});
+*/
 router.get('/callback', function(req, res) {
 
     // your application requests refresh and access tokens
@@ -87,18 +135,24 @@ router.get('/callback', function(req, res) {
 
                 // use the access token to access the Spotify Web API
                 request.get(options, function(error, response, body) {
-                    console.log(body);
+
                 });
 
-
-                return res.json({access_token: access_token, refresh_token: refresh_token});
+                // we can also pass the token to the browser to make requests from there
+                res.redirect('http://localhost:3000/main/#' +
+                    querystring.stringify({
+                        access_token: access_token,
+                        refresh_token: refresh_token
+                    }));
             } else {
-                return res.json({error: 'invalid_token'});
+                res.redirect('http://localhost:3000/main//#' +
+                    querystring.stringify({
+                        error: 'invalid_token'
+                    }));
             }
         });
     }
 });
-
 router.get('/refresh_token', function(req, res) {
 
     // requesting access token from refresh token
@@ -116,11 +170,14 @@ router.get('/refresh_token', function(req, res) {
     request.post(authOptions, function(error, response, body) {
         if (!error && response.statusCode === 200) {
             var access_token = body.access_token;
-            res.send({
-                'access_token': access_token
-            });
+
+            return res.json({access_token: access_token});
+        }
+        else {
+            return res.json({error: {statusCode: response.statusCode, body: response.body}});
         }
     });
 });
+
 
 module.exports = router;

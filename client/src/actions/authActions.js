@@ -42,7 +42,7 @@ export const setCurrentUser = (decoded) => {
         type: SET_CURRENT_USER,
         payload: decoded
     }
-}
+};
 //log user out
 export const logoutUser = () => dispatch => {
     //Remove token from local storage
@@ -51,4 +51,4 @@ export const logoutUser = () => dispatch => {
     setAuthToken(false);
     //Set current user to an empty object which will set isAuthenticated to false
     dispatch(setCurrentUser({}));
-}
+};

@@ -4,10 +4,12 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const users = require('./routes/api/users');
 const spotify = require('./routes/api/spotify');
-var cors = require('cors');
-var cookieParser = require('cookie-parser');
 
+
+var cookieParser = require('cookie-parser');
 const app = express();
+
+
 
 //Body Parser Middleware
 app.use(bodyParser.urlencoded({extended: false}));
@@ -23,7 +25,7 @@ mongoose
     .catch( err => console.log(err));
 
 //Passport Middleware
-app.use(passport.initialize()).use(cors()).use(cookieParser());
+app.use(passport.initialize()).use(cookieParser());
 
 //Passport Config
 require('./config/passport')(passport);

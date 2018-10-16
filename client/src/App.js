@@ -17,8 +17,10 @@ import Login from './components/authorization/Login';
 import Register from './components/authorization/Register';
 import Settings from './components/settings/Settings';
 import Logout from './components/Logout';
+
 // Check for token
 if (localStorage.jwtToken) {
+
     // Set auth token header auth
     setAuthToken(localStorage.jwtToken);
     // Decode token and get user info and exp

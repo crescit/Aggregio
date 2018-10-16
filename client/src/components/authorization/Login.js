@@ -10,7 +10,7 @@ class Login extends Component {
             email: '',
             password: '',
             errors: {}
-        }
+        };
         this.onChange.bind(this);
         this.onSubmit.bind(this);
     }
@@ -30,15 +30,15 @@ class Login extends Component {
     }
     onChange = (e) => {
         this.setState({[e.target.name]: e.target.value});
-    }
+    };
     onSubmit = (e) => {
         e.preventDefault();
         const user = {
             email: this.state.email,
             password: this.state.password
-        }
+        };
         this.props.loginUser(user);
-    }
+    };
     render() {
 
         const {errors} = this.state;
@@ -78,7 +78,7 @@ Login.propTypes = {
     loginUser: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
-}
+};
 const mapStateToProps = (state) => ({
     auth: state.auth,
     errors: state.errors
