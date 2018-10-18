@@ -9,6 +9,7 @@ import Main from './components/MainPage/Main';
 import PrivateRoute from './components/common/PrivateRoute';
 import setAuthToken from './utils/setAuthToken';
 import { setCurrentUser, logoutUser } from './actions/authActions';
+import { setCurrentTokens } from './actions/spotifyActions';
 //component imports go below
 import LandingPage from './components/layoutcomponents/LandingPage';
 import Footer from './components/layoutcomponents/Footer';
@@ -25,9 +26,11 @@ if (localStorage.jwtToken) {
     setAuthToken(localStorage.jwtToken);
     // Decode token and get user info and exp
     const decoded = jwt_decode(localStorage.jwtToken);
+    const tokens = { accessToken: localStorage.accessToken, refreshToken: localStorage.refreshToken};
+
     // Set user and isAuthenticated
     store.dispatch(setCurrentUser(decoded));
-
+    store.dispatch(setCurrentTokens(tokens));
     // Check for expired token
     const currentTime = Date.now() / 1000;
     if (decoded.exp < currentTime) {
