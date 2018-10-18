@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import {loginSpotify, refreshSpotify} from "../../actions/spotifyActions";
+import {loginSpotify} from "../../actions/spotifyActions";
 import {isEmpty} from '../../validation/is-empty';
+import SpotifyPlayer from '../MediaPlayers/SpotifyPlayer';
+import AppleMusicPlayer from '../MediaPlayers/AppleMusicPlayer';
+
 class Main extends Component {
     constructor(props){
         super(props);
@@ -23,7 +26,6 @@ class Main extends Component {
     componentDidMount(){
         this.getHashParams();
         const params = this.state.params;
-        console.log(params);
         if(!isEmpty(params)){
             const data = {
                 accessToken: params.access_token,
@@ -38,7 +40,8 @@ class Main extends Component {
 
         return(<div>
             <h1>Main Page</h1>
-
+            <SpotifyPlayer/>
+            <AppleMusicPlayer/>
         </div>);
     }
 }

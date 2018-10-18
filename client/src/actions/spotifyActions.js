@@ -1,4 +1,4 @@
-import {LOGIN_USER, REFRESH_TOKEN, GET_ERRORS} from "../actions/types";
+import {LOGIN_USER, REFRESH_TOKEN} from "../actions/types";
 
 //login to spotify
 export const loginSpotify = (data) => dispatch => {

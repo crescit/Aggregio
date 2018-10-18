@@ -50,48 +50,7 @@ router.get('/login', function(req, res) {
 
 
 });
-/*
-router.get('/callback', function(req, res) {
-    // your application requests refresh and access tokens
-    // after checking the state parameter
 
-    var code = req.query.code || null;
-    var state = req.query.state || null;
-    var storedState = req.cookies ? req.cookies[stateKey] : null;
-
-    if (state === null || state !== storedState) {
-        res.redirect('http://localhost:3000/#' +
-            querystring.stringify({
-                error: 'state_mismatch'
-            }));
-    } else {
-        res.clearCookie(stateKey);
-        var authOptions = {
-            url: 'https://accounts.spotify.com/api/token',
-            form: {
-                code: code,
-                redirect_uri: redirect_uri,
-                grant_type: 'authorization_code'
-            },
-            headers: {
-                'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
-            },
-            json: true
-        };
-
-        request.post(authOptions, function(error, response, body) {
-            if (!error && response.statusCode === 200) {
-
-                var access_token = body.access_token,
-                    refresh_token = body.refresh_token;
-                return res.json({access_token: access_token, refresh_token: refresh_token});
-            } else {
-                return res.json({error: 'invalid_token'});
-            }
-        });
-    }
-});
-*/
 router.get('/callback', function(req, res) {
 
     // your application requests refresh and access tokens
