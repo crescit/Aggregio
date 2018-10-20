@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
+import axios from 'axios';
 class SpotifyPlayer extends Component {
     constructor(props) {
         super(props);
@@ -14,17 +14,29 @@ class SpotifyPlayer extends Component {
             trackName: "Track Name",
             artistName: "Artist Name",
             albumName: "Album Name",
+            albumArtWork: "https://placeimg.com/640/480/any",
             playing: false,
             position: 0,
             duration: 1,
         };
         // this will later be set by setInterval
         this.playerCheckInterval = null;
+
     }
 
     // when we click the "go" button
     componentDidMount(){
         this.handleLogin();
+    }
+    playCarly(){
+        axios.put('https://api.spotify.com/v1/me/player/play',
+            {
+                "context_uri" : 'spotify:album:5ht7ItJgpBH7W6vJ5BqpPr'},{
+                headers: {
+                    Authorization: 'Bearer ' + this.state.token
+                }
+            })
+            .then().catch(err => console.log(err));
     }
     handleLogin() {
         if (this.state.token !== "") {
@@ -45,6 +57,7 @@ class SpotifyPlayer extends Component {
             } = state.track_window;
             const trackName = currentTrack.name;
             const albumName = currentTrack.album.name;
+            const albumArtWork = currentTrack.album.images[2].url;
             const artistName = currentTrack.artists
                 .map(artist => artist.name)
                 .join(", ");
@@ -54,6 +67,7 @@ class SpotifyPlayer extends Component {
                 duration,
                 trackName,
                 albumName,
+                albumArtWork,
                 artistName,
                 playing
             });
@@ -148,22 +162,26 @@ class SpotifyPlayer extends Component {
             trackName,
             artistName,
             albumName,
+            albumArtWork,
             error,
             playing
         } = this.state;
+
+
         return (
             <div className="App">
                 <div className="App-header">
-                    <h3>Spotify Player</h3>
+                    <h3 style={{color: 'white'}}>Spotify Player</h3>
                 </div>
 
                 {error && <p>Error: {error}</p>}
 
                 {loggedIn ?
                     (<div>
-                        <p>Artist: {artistName}</p>
-                        <p>Track: {trackName}</p>
-                        <p>Album: {albumName}</p>
+                        <img alt="track cover art" style={{height : "256px", width : "256px" }}src={albumArtWork}/>
+                        <p style={{color: 'white'}}>Artist: {artistName}</p>
+                        <p style={{color: 'white'}}>Track: {trackName}</p>
+                        <p style={{color: 'white'}}>Album: {albumName}</p>
                         <p>
                             <button onClick={() => this.onPrevClick()}>Previous</button>
                             <button onClick={() => this.onPlayClick()}>{playing ? "Pause" : "Play"}</button>
@@ -172,7 +190,7 @@ class SpotifyPlayer extends Component {
                     </div>)
                     :
                     (<div>
-                        <p className="App-intro">
+                        <p style={{color: 'white'}} className="App-intro">
                             Please authenticate Spotify in settings.
                         </p>
                     </div>)

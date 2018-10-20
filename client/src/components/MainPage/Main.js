@@ -5,6 +5,9 @@ import {loginSpotify} from "../../actions/spotifyActions";
 import {isEmpty} from '../../validation/is-empty';
 import SpotifyPlayer from '../MediaPlayers/SpotifyPlayer';
 import AppleMusicPlayer from '../MediaPlayers/AppleMusicPlayer';
+import SearchBar from './SearchBar';
+
+
 
 class Main extends Component {
     constructor(props){
@@ -38,10 +41,10 @@ class Main extends Component {
 
 
 
-        return(<div>
-            <h1>Main Page</h1>
-            <SpotifyPlayer/>
-            <AppleMusicPlayer/>
+        return(<div className="regBackground">
+
+            <SearchBar/>
+
         </div>);
     }
 }

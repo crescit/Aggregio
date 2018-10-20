@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-
+import {logoutUser} from "../../actions/authActions";
 import {
     Collapse,
     Navbar,
@@ -34,9 +34,12 @@ class NavigationBar extends Component {
             isOpen: !this.state.isOpen
         });
     }
+    logOut(){
+        this.props.logoutUser();
+    }
     render(){
         let NavItems;
-        if(this.state.auth === false){
+        if(this.props.auth.isAuthenticated === false){
             NavItems = (<div>
                  <Navbar color="dark" dark expand="md">
                 <NavbarBrand href="/">Aggregio</NavbarBrand>
@@ -54,13 +57,25 @@ class NavigationBar extends Component {
             NavItems = (<div>
                  <Navbar color="dark" dark expand="md">
                 <NavbarBrand href="/">Aggregio</NavbarBrand>
+                     <Nav className="mr-auto">
+                     <NavItem style={{maxheight: '25px'}} >
+                         <NavLink style={{maxheight: '25px', color:'white'}} href="/songs">Songs</NavLink>
+                     </NavItem>
+                     <NavItem style={{maxheight: '25px'}}>
+                         <NavLink style={{maxheight: '25px', color:'white'}} href="/albums">Albums</NavLink>
+                     </NavItem>
+                     <NavItem style={{maxheight: '25px'}}>
+                         <NavLink style={{maxheight: '25px', color:'white'}} href="/playlists">Playlists</NavLink>
+                     </NavItem>
+                     </Nav>
                 <NavbarToggler onClick={this.toggle} />
+
                 <Collapse isOpen={this.state.isOpen} navbar>
                 <Nav className="ml-auto" navbar><NavItem>
                 <NavLink href="/settings">Settings</NavLink>
             </NavItem>
                 <NavItem>
-                    <NavLink href="/logout">Logout</NavLink>
+                    <NavLink onClick={() => this.logOut()} href="/logout">Logout</NavLink>
                 </NavItem></Nav>
              </Collapse>
             </Navbar></div>);
@@ -81,4 +96,4 @@ NavigationBar.propTypes = {
 const mapStateToProps = (state) => ({
     auth: state.auth
 });
-export default connect(mapStateToProps)(NavigationBar);
+export default connect(mapStateToProps, {logoutUser})(NavigationBar);

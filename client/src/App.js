@@ -17,6 +17,7 @@ import NavigationBar from './components/layoutcomponents/NavigationBar';
 import Login from './components/authorization/Login';
 import Register from './components/authorization/Register';
 import Settings from './components/settings/Settings';
+import SearchResults from './components/Search/SearchResults';
 import Logout from './components/Logout';
 
 // Check for token
@@ -65,6 +66,13 @@ class App extends Component {
                   exact
                   path="/settings"
                   component={Settings}
+              />
+          </Switch>
+          <Switch>
+              <PrivateRoute
+                  exact
+                  path="/searchresults"
+                  component={SearchResults}
               />
           </Switch>
           <Switch>

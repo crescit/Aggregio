@@ -34,7 +34,7 @@ class AppleMusicPlayer extends Component {
         return(
             <div>
             <hr/>
-            <h3>Apple Music Player Goes Here</h3>
+            <h3 style={{color: 'white'}}>Apple Music Player</h3>
                 <button onClick={() => this.onPrevClick(music)}className="data-apple-music-skip-to-previous-item">Previous</button>
                 <button onClick={() => this.onPauseClick(music)}className="data-apple-music-pause">Pause</button>
                 <button onClick={() => this.onPlayClick(music)} className="data-apple-music-play">Play</button>

@@ -50,15 +50,15 @@ class Register extends Component {
     render() {
         const {errors} = this.state;
 
-        return (<div>
+        return (<div className="regBackground">
             <div className="register">
                 <div className="container">
                     <div className="row">
                         <div className="col-md-8 m-auto">
-                            <h1 className="display-4 text-center">
+                            <h1 style={{color: 'white'}} className="display-4 text-center">
                                 Sign Up
                             </h1>
-                            <p className="lead text-center">
+                            <p style={{color: 'white'}} className="lead text-center">
                                 Create your DevConnector account
                             </p>
                             <form onSubmit={this.onSubmit}>
