@@ -3,11 +3,11 @@ import { combineReducers } from 'redux';
 import authReducer from './authReducer';
 import errorReducer from './errorReducer';
 import spotifyReducer from './spotifyReducer';
-import songReducer from './songReducer';
+import searchReducer from './searchReducer';
 
 export default combineReducers({
     auth: authReducer,
     errors: errorReducer,
-    spotify: spotifyReducer,
-    songs: songReducer
+    search: searchReducer,
+    spotify: spotifyReducer
 });
