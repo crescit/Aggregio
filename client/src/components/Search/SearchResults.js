@@ -1,16 +1,32 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import {searchTrack, searchAlbum, } from "../../actions/searchActions";
+import {searchTrack, searchAlbum, nextAlbums, nextTracks} from "../../actions/searchActions";
 import TrackItem from './TrackItem';
 import AlbumItem from './AlbumItem';
 import { Container, Row, Col } from 'reactstrap';
+import './overlay.css';
 
 class SearchResults extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            albumNext: false,
+            trackNext: false
+        }
+    }
     componentDidMount(){
         this.props.searchTrack(this.props.location.state[0].term, this.props.spotify.accessToken);
         this.props.searchAlbum(this.props.location.state[0].term, this.props.spotify.accessToken);
-    }
+    };
+    moreAlbum = (url, token) => {
+        this.props.nextAlbums(url, token);
+        this.setState({albumNext: true});
+    };
+    moreTrack = (url, token) => {
+        this.props.nextTracks(url, token);
+        this.setState({trackNext: true});
+    };
     render(){
         const { appleTracks, loadingAppleTrack} = this.props.search;
         const { appleAlbums, loadingAppleAlbum} = this.props.search;
@@ -21,8 +37,11 @@ class SearchResults extends Component {
         let appleAlbumContent;
         let spotifyTrackContent;
         let spotifyAlbumContent;
-
-        if(appleTracks === null || loadingAppleTrack){
+        let albumButton;
+        let trackButton;
+        if(this.state.trackNext){
+            appleTrackContent = null;
+        }else if(appleTracks === null|| loadingAppleTrack){
             appleTrackContent = (<h3> Apple Track Loading</h3>)
         }else{
             if(appleTracks.songs === undefined){
@@ -51,17 +70,20 @@ class SearchResults extends Component {
                                    id={data.id} artwork={data.album.images[0].url}/>
                     </Col>
                 ));
+                trackButton = (<button className="btn btn-primary btn-block" onClick={() => this.moreTrack(spotifyTracks.tracks.next, this.props.spotify.accessToken)}> More Tracks</button>);
+
             }
         }
-
-        if(appleAlbums === null || loadingAppleAlbum){
+        if(this.state.albumNext){
+            appleAlbumContent = null;
+        }else if(appleAlbums === null || loadingAppleAlbum){
             appleAlbumContent = (<h3> Apple Album Loading</h3>)
         }else{
             if(appleAlbums.albums === undefined){
 
             }else{
                 appleAlbumContent = appleAlbums.albums.data.map(data => (
-                    <Col className="col-3 col-sm-3 col-md-3">
+                    <Col  key={data.id} className="col-3 col-sm-3 col-md-3">
                         <AlbumItem apple={true} albumName={data.attributes.name} artistName={data.attributes.artistName} id={data.id} artwork={data.attributes.artwork.url}/>
                     </Col>
                 ));
@@ -74,10 +96,13 @@ class SearchResults extends Component {
 
             }else{
                 spotifyAlbumContent = spotifyAlbums.albums.items.map(data => (
-                    <Col className="col-3 col-sm-3 col-md-3">
-                        <AlbumItem  uri={data.uri} albumName={data.name} artistName={data.artists[0].name} id={data.id} artwork={data.images[0].url}/>
+                    <Col  key={data.uri} className="col-3 col-sm-3 col-md-3">
+                        <AlbumItem uri={data.uri} albumName={data.name} artistName={data.artists[0].name} id={data.id} artwork={data.images[0].url}/>
+
                     </Col>
                 ));
+                albumButton = (<button className="btn btn-primary btn-block" onClick={() => this.moreAlbum(spotifyAlbums.albums.next.toString(), this.props.spotify.accessToken)}> More Albums</button>
+                );
             }
         }
 
@@ -92,7 +117,9 @@ class SearchResults extends Component {
                   <Row >
                   {spotifyTrackContent}
                   {appleTrackContent}
+                      {trackButton}
                   </Row>
+
                   <hr/>
               </div>
               <div>
@@ -100,6 +127,8 @@ class SearchResults extends Component {
                     <Row>
                   {spotifyAlbumContent}
                   {appleAlbumContent}
+                  {albumButton}
+
                     </Row>
                   <hr/>
               </div>
@@ -112,6 +141,8 @@ class SearchResults extends Component {
 SearchResults.propTpes = {
     searchTrack: PropTypes.func.isRequired,
     searchAlbum: PropTypes.func.isRequired,
+    nextTracks: PropTypes.func.isRequired,
+    nextAlbums: PropTypes.func.isRequired,
     spotify: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired,
     search: PropTypes.object.isRequired
@@ -121,4 +152,4 @@ const mapStateToProps = (state) => ({
     errors: state.errors,
     search: state.search
 });
-export default connect(mapStateToProps, {searchTrack, searchAlbum})(SearchResults);
+export default connect(mapStateToProps, {searchTrack, searchAlbum, nextAlbums, nextTracks})(SearchResults);

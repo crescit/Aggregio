@@ -69,6 +69,37 @@ export const searchAlbum  = (term, token) => dispatch =>  {
         })
     });
 };
+export const nextTracks  = (url, token) => dispatch => {
+    dispatch(setSpotifyTrackLoading());
+    axios.get(url, {headers: {
+            Authorization: 'Bearer ' + token
+        }}
+    )
+        .then(res => dispatch({
+            type: SPOTIFY_SEARCH_TRACK,
+            payload: res.data
+        })).catch(err => console.log(err));
+    dispatch({
+        type: APPLE_SEARCH_TRACK,
+        payload: null
+    })
+
+};
+export const nextAlbums = (url, token) => dispatch => {
+    dispatch(setSpotifyAlbumLoading());
+    axios.get(url, {headers: {
+            Authorization: 'Bearer ' + token
+        }}
+    )
+        .then(res => dispatch({
+            type: SPOTIFY_SEARCH_ALBUM,
+            payload: res.data
+        })).catch(err => console.log(err));
+    dispatch({
+        type: APPLE_SEARCH_ALBUM,
+        payload: null
+    })
+};
 export const setAppleArtistLoading = () => {
     return {
         type: APPLE_ARTIST_LOADING

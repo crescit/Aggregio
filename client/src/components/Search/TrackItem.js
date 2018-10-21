@@ -36,7 +36,12 @@ class TrackItem extends Component {
         }
         return(
             <div >
-                <button  className="btn btn-dark">{imgContent}</button>
+                <button  className="btn btn-dark">
+                    <div className="container1">{imgContent}<div className="overlay">
+                        <div className="text1">+</div>
+                    </div>
+                    </div>
+                </button>
                 <h5>{this.props.name}</h5>
                 <h5>{this.props.artist.toProperCase()}</h5>
             </div>);
