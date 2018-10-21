@@ -50,7 +50,7 @@ class Register extends Component {
     render() {
         const {errors} = this.state;
 
-        return (<div className="regBackground">
+        return (<div >
             <div className="register">
                 <div className="container">
                     <div className="row">

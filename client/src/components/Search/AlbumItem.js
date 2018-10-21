@@ -1,24 +1,18 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-class TrackItem extends Component {
+class AlbumItem extends Component{
     constructor(props){
         super(props);
         this.state = {
-            name: this.props.name,
-            artist: this.props.artist,
-            album: this.props.album,
-            artwork: this.props.artwork,
             id: this.props.id,
-            duration_ms: this.props.duration,
+            artwork: this.props.artwork,
+            artistName: this.props.artistName,
+            albumName: this.props.albumName,
             apple: false || this.props.apple,
             uri: "" || this.props.uri
-        };
-        String.prototype.toProperCase = function () {
-            return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
-        };
+        }
     }
-
     render(){
         let url = this.props.artwork;
         var w = url.indexOf("{w}");
@@ -35,19 +29,18 @@ class TrackItem extends Component {
 
         }
         return(
-            <div >
-                <button  className="btn btn-dark">{imgContent}</button>
-                <h5>{this.props.name}</h5>
-                <h5>{this.props.artist.toProperCase()}</h5>
-            </div>);
+            <div>
+                <button className="btn btn-dark">{imgContent}</button>
+                <h5>{this.state.albumName}</h5>
+                <h5>{this.state.artistName}</h5>
+            </div>
+        )
     }
 }
-TrackItem.propTypes = {
-    name: PropTypes.string.isRequired,
-    artist: PropTypes.string.isRequired,
-    album: PropTypes.string.isRequired,
-    duration: PropTypes.string.isRequired,
+AlbumItem.propTypes = {
+    albumName: PropTypes.string.isRequired,
+    artistName: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
     artwork: PropTypes.string.isRequired,
 };
-export default TrackItem;
+export default AlbumItem;

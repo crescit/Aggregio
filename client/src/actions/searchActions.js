@@ -15,12 +15,12 @@ export const searchArtist  = (term, token) => dispatch => {
     dispatch(setSpotifyArtistLoading());
 
     let music = window.MusicKit.getInstance();
-    let results = music.api.search(term, { limit: 2, types: 'artists' });
-    axios.get(`https://api.spotify.com/v1/search?q=${term}&type=artist`, {headers: {
+    let results = music.api.search(term, { limit: 8, types: 'artists' });
+    axios.get(`https://api.spotify.com/v1/search?q=${term}&type=artist&limit=8`, {headers: {
             Authorization: 'Bearer ' + token,
         }}
     )
-        .then(res => dispatch({ type: SPOTIFY_SEARCH_ARTIST, payload: res})).catch(err => console.log(err));
+        .then(res => dispatch({ type: SPOTIFY_SEARCH_ARTIST, payload: res.data})).catch(err => console.log(err));
     dispatch(setAppleArtistLoading());
     results.then(function(results){
         dispatch({
@@ -32,14 +32,14 @@ export const searchArtist  = (term, token) => dispatch => {
 export const searchTrack  = (term, token) => dispatch =>  {
     dispatch(setSpotifyTrackLoading());
     let music = window.MusicKit.getInstance();
-    let results = music.api.search(term, { limit: 2, types: 'songs' });
-    axios.get(`https://api.spotify.com/v1/search?q=${term}&type=track`, {headers: {
+    let results = music.api.search(term, { limit: 8, types: 'songs' });
+    axios.get(`https://api.spotify.com/v1/search?q=${term}&type=track&limit=8`, {headers: {
             Authorization: 'Bearer ' + token
         }}
     )
         .then(res => dispatch({
             type: SPOTIFY_SEARCH_TRACK,
-            payload: res
+            payload: res.data
         })).catch(err => console.log(err));
     dispatch(setAppleTrackLoading());
     results.then(function(results){
@@ -52,14 +52,14 @@ export const searchTrack  = (term, token) => dispatch =>  {
 export const searchAlbum  = (term, token) => dispatch =>  {
     dispatch(setSpotifyAlbumLoading());
     let music = window.MusicKit.getInstance();
-    let results = music.api.search(term, { limit: 2, types: 'albums' });
-    axios.get(`https://api.spotify.com/v1/search?q=${term}&type=album`, {headers: {
+    let results = music.api.search(term, { limit: 8, types: 'albums' });
+    axios.get(`https://api.spotify.com/v1/search?q=${term}&type=album&limit=8`, {headers: {
             Authorization: 'Bearer ' + token
         }}
     )
         .then(res => dispatch({
             type: SPOTIFY_SEARCH_ALBUM,
-            payload: res
+            payload: res.data
         })).catch(err => console.log(err));
     dispatch(setAppleAlbumLoading());
     results.then(function(results){

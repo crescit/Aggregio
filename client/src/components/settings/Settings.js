@@ -14,7 +14,7 @@ class Settings extends Component{
     }
 
     render(){
-        return(<div className="regBackground"><h1 style={{color:'white' }}>Settings</h1>
+        return(<div ><h1 style={{color:'white' }}>Settings</h1>
             <h3 style={{color:'white' }}> Authorize Apple Music</h3>
             <AuthorizeMusicServices/>
             <h3 style={{color:'white' }}> Authorize Spotify</h3>

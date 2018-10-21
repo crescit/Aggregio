@@ -41,7 +41,7 @@ class Main extends Component {
 
 
 
-        return(<div className="regBackground">
+        return(<div>
 
             <SearchBar/>
 

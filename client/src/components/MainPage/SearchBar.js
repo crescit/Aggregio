@@ -1,11 +1,7 @@
 import React, {Component} from 'react';
 import {
     InputGroup,
-    InputGroupButtonDropdown,
     Input,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem
 } from 'reactstrap';
 import {withRouter} from 'react-router-dom';
 
@@ -21,12 +17,10 @@ class SearchBar extends Component{
             dropdownOpen: false,
             splitButtonOpen: false,
             value: '',
-            filter: 'track'
         };
         this.handleKey = this.handleKey.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleFilter = this.handleFilter.bind(this);
     }
     toggleDropDown() {
         this.setState({
@@ -52,27 +46,13 @@ class SearchBar extends Component{
         if(this.state.value === ""){
             return;
         }else {
-            this.props.history.push(`/searchresults`, [{term: this.state.value}, {filter: this.state.filter}]);
+            this.props.history.push(`/searchresults`, [{term: this.state.value}]);
         }
-    }
-    handleFilter(filter){
-        this.setState({filter: filter});
     }
     render(){
         return(<div><InputGroup>
             <InputGroup >
                 <Input  onKeyDown={this.handleKey} onChange={this.handleChange} value={this.state.value} placeholder="Search for music"/>
-                <InputGroupButtonDropdown  addonType="prepend" isOpen={this.state.dropdownOpen} toggle={this.toggleDropDown}>
-                    <DropdownToggle caret>
-                        Filter By (current: {this.state.filter})
-                    </DropdownToggle>
-                    <DropdownMenu >
-                        <DropdownItem header>Filters</DropdownItem>
-                        <DropdownItem onClick={() => this.handleFilter('track')}>Track</DropdownItem>
-                        <DropdownItem onClick={() => this.handleFilter('artist')}>Artist</DropdownItem>
-                        <DropdownItem onClick={() => this.handleFilter('album')}>Album</DropdownItem>
-                    </DropdownMenu>
-                </InputGroupButtonDropdown>
             </InputGroup>
         </InputGroup></div>);
     }
