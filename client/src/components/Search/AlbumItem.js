@@ -33,11 +33,13 @@ class AlbumItem extends Component{
                 <button className="btn btn-dark">
                     <div className="container1">{imgContent}
                         <div className="overlay">
-                            <div className="text1">+</div>
+                            <div className="text1"><i className="fa fa-play"></i> </div>
                         </div>
                     </div></button>
-                <h5>{this.state.albumName}</h5>
-                <h5>{this.state.artistName}</h5>
+                <button style={{float: 'center'}}className="btn btn-info">+</button>
+                <h6>{this.state.albumName}</h6>
+                <h6>{this.state.artistName}</h6>
+
             </div>
         )
     }

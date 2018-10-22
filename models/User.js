@@ -4,6 +4,10 @@ const Schema = mongoose.Schema;
 
 //create Schema
 const UserSchema = new Schema({
+    song: {
+        type: Schema.Types.ObjectId,
+        ref: 'song'
+    },
     name: {
         type: String,
         required: true
@@ -16,6 +20,50 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
+    library: [{
+        name: {
+            type: String,
+            required: true
+        },
+        artist: {
+            type: String,
+            required: true
+        },
+        album: {
+            type: String,
+            required: true
+        },
+        id: {
+            type: String,
+            required: true
+        },
+        artwork: {
+            type: String,
+            required: true
+        },
+        duration_ms: {
+            type: String,
+            required: true
+        },
+        apple: {
+            type: Boolean,
+            required: true
+        },
+        uri: {
+            type: String,
+        }
+    }],
+    playlist: [{
+       playlistName: {
+           type: String,
+           required: true
+       }, songs: [{
+           song: {
+               type: Schema.Types.ObjectId,
+               ref:'song'
+           }
+        }]
+    }],
     date: {
         type: Date,
         default: Date.now()

@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const users = require('./routes/api/users');
 const spotify = require('./routes/api/spotify');
-
+const songs = require('./routes/api/songs');
 
 var cookieParser = require('cookie-parser');
 const app = express();
@@ -33,6 +33,7 @@ require('./config/passport')(passport);
 //use routes, this is how the the files in api know that they're pointing to /api/x
 app.use('/api/users', users);
 app.use('/api/spotify', spotify);
+app.use('/api/songs', songs);
 
 const port = process.env.PORT || 5000;
 

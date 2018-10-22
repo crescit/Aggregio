@@ -38,12 +38,14 @@ class TrackItem extends Component {
             <div >
                 <button  className="btn btn-dark">
                     <div className="container1">{imgContent}<div className="overlay">
-                        <div className="text1">+</div>
+                        <div className="text1"><i className="fa fa-play"></i></div>
                     </div>
                     </div>
                 </button>
-                <h5>{this.props.name}</h5>
-                <h5>{this.props.artist.toProperCase()}</h5>
+                <button style={{float: 'center'}}className="btn btn-info">+</button>
+
+                <h6>{this.props.name}</h6>
+                <h6>{this.props.artist.toProperCase()}</h6>
             </div>);
     }
 }

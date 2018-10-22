@@ -109,7 +109,8 @@ class SearchResults extends Component {
 
         return(
 
-          <div className="p-3 mb-2 bg-dark text-white"><h1>Search Results</h1>
+          <div className="p-3 mb-2 bg-dark text-white"><h1>Search Results for: {this.props.location.state[0].term}</h1>
+              <small>Duplicates may appear from both services</small>
               <Container>
               <div >
                     <h2>Songs</h2>
