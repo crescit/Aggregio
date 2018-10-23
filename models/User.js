@@ -53,6 +53,31 @@ const UserSchema = new Schema({
             type: String,
         }
     }],
+    albums: [{
+        artistName: {
+            type: String,
+            required: true
+        },
+        albumName: {
+            type: String,
+            required: true
+        },
+        id: {
+            type: String,
+            required: true
+        },
+        artwork: {
+            type: String,
+            required: true
+        },
+        apple: {
+            type: Boolean,
+            required: true
+        },
+        uri: {
+            type: String,
+        }
+    }],
     playlist: [{
        playlistName: {
            type: String,

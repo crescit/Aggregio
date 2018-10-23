@@ -8,7 +8,7 @@ const Validator = require('validator');
 const User = require('../../models/User');
 
 const validateSongInput = require('../../validation/song');
-
+const validateAlbumInput = require('../../validation/album');
 // @route   GET api/songs/test
 // @desc    Tests users route
 // @access  Public
@@ -22,6 +22,15 @@ router.get('/test', (req, res) => {
 router.get('/library', passport.authenticate('jwt', {session: false}), (req, res) => {
     User.findOne({_id: req.user.id}).then(user => {
         return res.json(user.library)
+    }).catch(err => res.status(404).json({error: 'user not found'}));
+});
+
+// @route   GET api/songs/albums
+// @desc    Returns user's album collection
+// @access  Private
+router.get('/albums', passport.authenticate('jwt', {session: false}), (req, res) => {
+    User.findOne({_id: req.user.id}).then(user => {
+        return res.json(user.albums)
     }).catch(err => res.status(404).json({error: 'user not found'}));
 });
 
@@ -182,6 +191,53 @@ router.delete('/library/:id', passport.authenticate('jwt', {session: false}), (r
             return res.status(404).json({songnotfound: 'song not found'});
         }else {
             user.library.splice(removeIndex, 1);
+            user.save();
+            return res.json({success: 'success'});
+        }
+    }).catch(err => res.status(404).json({nouserfound: 'No user found with that id'}));
+
+});
+
+// @route POST api/songs/albums
+// @desc  Adds albums to user's albums collection
+// @access Private
+router.post('/albums',  passport.authenticate('jwt', {session: false}), (req, res) => {
+    const {errors, isValid} = validateAlbumInput(req.body);
+
+    //check if the song is valid
+    if(!isValid){
+        return res.status(400).json(errors);
+    }
+
+    User.findOne({_id: req.user.id})
+        .then(user => {
+            const newAlbum = {
+                albumName: req.body.albumName,
+                artistName: req.body.artistName,
+                artwork: req.body.artwork,
+                id: req.body.id,
+                uri: req.body.uri,
+                apple: req.body.apple
+            };
+            user.albums.push(newAlbum);
+            user.save().then(user => res.json(user)).catch(err => res.json({error: err}));
+        })
+        .catch(err => res.status(404).json(err));
+
+});
+// @route DELETE api/songs/album/:id (album id)
+// @desc  Remove albums from user's albums collection
+// @access Private
+router.delete('/albums/:id', passport.authenticate('jwt', {session: false}), (req,res) => {
+    User.findOne({_id: req.user.id}).then(user => {
+        if(user.albums.filter(album => album._id.toString()).length === 0){
+            return res.status(404).json({albumempty: 'albums is empty'});
+        }
+        const removeIndex = user.albums.map(item => item._id.toString()).indexOf(req.params.id);
+        if(removeIndex === -1){
+            return res.status(404).json({albumnotfound: 'album not found'});
+        }else {
+            user.albums.splice(removeIndex, 1);
             user.save();
             return res.json({success: 'success'});
         }
