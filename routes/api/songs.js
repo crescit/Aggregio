@@ -16,6 +16,25 @@ router.get('/test', (req, res) => {
     return res.json({msg: "Songs works"})
 });
 
+// @route   GET api/songs/library
+// @desc    Returns user library
+// @access  Private
+router.get('/library', passport.authenticate('jwt', {session: false}), (req, res) => {
+    User.findOne({_id: req.user.id}).then(user => {
+        return res.json(user.library)
+    }).catch(err => res.status(404).json({error: 'user not found'}));
+});
+
+
+// @route   GET api/songs/playlist
+// @desc    Returns user playlist
+// @access  Private
+router.get('/playlist', passport.authenticate('jwt', {session: false}), (req, res) => {
+    User.findOne({_id: req.user.id}).then(user => {
+        return res.json(user.playlist)
+    }).catch(err => res.status(404).json({error: 'user not found'}));
+});
+
 // @route POST api/songs/addToPlaylist/:id
 // @desc  Add song to a playlist
 // @access Private
