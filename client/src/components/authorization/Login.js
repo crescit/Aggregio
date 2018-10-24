@@ -66,7 +66,7 @@ class Login extends Component {
                                 })} type="password" placeholder="Password" name="password"/>
                                 {errors.password && (<div className="invalid-feedback">{errors.password}</div>)}
                             </div>
-                            <input type="submit" className="btn btn-info btn-block mt-4"/>
+                            <input type="submit" value="Login" className="btn btn-info btn-block mt-4"/>
                         </form>
                     </div>
                 </div>

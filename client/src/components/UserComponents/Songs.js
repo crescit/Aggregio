@@ -8,7 +8,14 @@ class Songs extends Component {
         this.props.getSongs();
     }
     render(){
-        return(<div><h1>Songs</h1></div>)
+        let SongContent;
+        if(this.props.library.loadingSongs){
+            SongContent = <div><h1>User Songs are loading</h1></div>
+        }
+        if(this.props.library.songs.length === 0){
+            SongContent = <div><h1>There are no songs in the user library, you can add songs to your library from the search function. </h1></div>
+        }
+        return(<div><h1>Songs</h1>{SongContent}</div>)
     }
 }
 Songs.propTypes = {

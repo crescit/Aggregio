@@ -65,7 +65,7 @@ class SearchResults extends Component {
             }else {
                 spotifyTrackContent = spotifyTracks.tracks.items.map(data => (
                     <Col className="col-3 col-sm-3 col-md-3" key={data.id}>
-                        <TrackItem uri={data.uri} key={data.id} name={data.name} artist={data.artists[0].name}
+                        <TrackItem apple={false} uri={data.uri} key={data.id} name={data.name} artist={data.artists[0].name}
                                    album={data.album.name} duration={data.duration_ms.toString()}
                                    id={data.id} artwork={data.album.images[0].url}/>
                     </Col>
@@ -97,7 +97,7 @@ class SearchResults extends Component {
             }else{
                 spotifyAlbumContent = spotifyAlbums.albums.items.map(data => (
                     <Col  key={data.uri} className="col-3 col-sm-3 col-md-3">
-                        <AlbumItem uri={data.uri} albumName={data.name} artistName={data.artists[0].name} id={data.id} artwork={data.images[0].url}/>
+                        <AlbumItem apple={false} uri={data.uri} albumName={data.name} artistName={data.artists[0].name} id={data.id} artwork={data.images[0].url}/>
 
                     </Col>
                 ));

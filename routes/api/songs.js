@@ -54,14 +54,14 @@ router.post('/addToPlaylist/:id', passport.authenticate('jwt', {session: false})
         const playlistIndex = user.playlist.map(item => item._id.toString()).indexOf(req.params.id);
         if(playlistIndex === -1){
             errors.notfound= "Playlist not found with that id";
-            return res.status(400).json(errors.notfound);
+            return res.status(400).json({error: errors.notfound});
 
         }else{
             const {errors, isValid} = validateSongInput(req.body);
 
             //check if the song is valid
             if(!isValid){
-                return res.status(400).json(errors);
+                return res.status(400).json({error: errors});
             }
             const newSong = {
                 name: req.body.name,
@@ -90,7 +90,7 @@ router.delete('/removeFromPlaylist/:id/:songId', passport.authenticate('jwt', {s
         const playlistIndex = user.playlist.map(item => item._id.toString()).indexOf(req.params.id);
         if(playlistIndex === -1){
             errors.playlistnotfound= "Playlist not found with that id";
-            return res.status(400).json(errors.playlistnotfound);
+            return res.status(400).json({error: errors});
         }
         const songIndex = user.playlist[playlistIndex].songs.map(item => item._id.toString()).indexOf(req.params.songId);
         if(songIndex === -1){
@@ -111,7 +111,7 @@ router.post('/playlist', passport.authenticate('jwt', {session : false}), (req, 
     let errors = {};
     if(req.body.name === undefined || Validator.isEmpty(req.body.name)){
         errors.noname = "No playlist name given";
-        return res.status(400).json(errors);
+        return res.status(400).json({error: errors});
     }
     User.findOne({_id: req.user.id}).then(user => {
         const playlistIndex = user.playlist.map(item => item.playlistName.toString()).indexOf(req.body.name);
@@ -157,7 +157,7 @@ router.post('/library',  passport.authenticate('jwt', {session: false}), (req, r
 
     //check if the song is valid
     if(!isValid){
-        return res.status(400).json(errors);
+        return res.status(400).json({error: errors});
     }
 
     User.findOne({_id: req.user.id})
@@ -206,7 +206,7 @@ router.post('/albums',  passport.authenticate('jwt', {session: false}), (req, re
 
     //check if the song is valid
     if(!isValid){
-        return res.status(400).json(errors);
+        return res.status(400).json({error: errors});
     }
 
     User.findOne({_id: req.user.id})

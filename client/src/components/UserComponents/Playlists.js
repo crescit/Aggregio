@@ -8,7 +8,14 @@ class Playlists extends Component {
         this.props.getPlaylists();
     }
     render(){
-        return(<div><h1>Playlists</h1></div>)
+        let PlaylistContent;
+        if(this.props.library.loadingPlaylist){
+            PlaylistContent = <div><h1>User Playlists are loading</h1></div>
+        }
+        if(this.props.library.playlists.length === 0){
+            PlaylistContent = <div><h1>There are no playlists in the user library, you can create a playlist </h1></div>
+        }
+        return(<div><h1>Playlists</h1>{PlaylistContent}</div>)
     }
 }
 Playlists.propTypes = {

@@ -10,7 +10,6 @@ module.exports = function validateSong(data){
     data.artwork = !isEmpty(data.artwork) ? data.artwork: '';
     data.duration_ms = !isEmpty(data.duration_ms) ? data.duration_ms: '';
     data.uri = !isEmpty(data.uri) ? data.uri: '';
-    data.apple = !isEmpty(data.apple) ? data.apple: '';
 
     if(!Validator.isURL(data.artwork)){
         errors.artwork = "Artwork url is not valid";
@@ -36,9 +35,10 @@ module.exports = function validateSong(data){
     if(Validator.isEmpty(data.uri)){
         errors.uri = "URI is required";
     }
-    if(Validator.isEmpty(data.apple)){
-        errors.apple = "Apple field is required";
+    if(data.apple === undefined){
+        errors.apple = "Apple field is required"
     }
+
     return {
         errors: errors,
         isValid: isEmpty(errors)

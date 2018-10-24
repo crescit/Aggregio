@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {addAlbum} from "../../actions/libraryActions";
+import {removeAlbum} from "../../actions/libraryActions";
 import {connect} from 'react-redux';
 
 class AlbumItem extends Component{
     constructor(props){
         super(props);
         this.state = {
+            _id: this.props._id,
             id: this.props.id,
             artwork: this.props.artwork,
             artistName: this.props.artistName,
@@ -15,16 +16,8 @@ class AlbumItem extends Component{
             uri: "" || this.props.uri
         }
     }
-    addAlbum = () => {
-        const albumData = {
-            id: this.state.id,
-            apple: this.state.apple,
-            uri: this.state.uri,
-            artwork: this.state.artwork,
-            albumName: this.state.albumName,
-            artistName: this.state.artistName
-        }
-        this.props.addAlbum(albumData);
+    remove = () => {
+        this.props.removeAlbum(this.state._id);
     };
     render(){
         let url = this.props.artwork;
@@ -49,7 +42,7 @@ class AlbumItem extends Component{
                             <div className="text1"><i className="fa fa-play"></i> </div>
                         </div>
                     </div></button>
-                <button onClick={() => this.addAlbum()} style={{float: 'center'}}className="btn btn-info">+</button>
+                <button onClick={() => this.remove()} style={{float: 'center'}}className="btn btn-info">+</button>
                 <h6>{this.state.albumName}</h6>
                 <h6>{this.state.artistName}</h6>
 
@@ -63,6 +56,7 @@ AlbumItem.propTypes = {
     id: PropTypes.string.isRequired,
     artwork: PropTypes.string.isRequired,
     apple: PropTypes.bool.isRequired,
-    addAlbum: PropTypes.func.isRequired
+    addAlbum: PropTypes.func.isRequired,
+    _id: PropTypes.string.isRequired
 };
-export default connect(null, {addAlbum})(AlbumItem);
+export default connect(null, {removeAlbum})(AlbumItem);

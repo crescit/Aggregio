@@ -4,5 +4,6 @@ module.exports = {
     externals: {
         MusicKit: 'MusicKit',
         Spotify: 'Spotify'
-    }
+    },
+
 };

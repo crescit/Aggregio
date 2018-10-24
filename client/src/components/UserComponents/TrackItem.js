@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {addSong} from "../../actions/libraryActions";
+import {removeTrack} from "../../actions/libraryActions";
 import {connect} from 'react-redux';
 
 class TrackItem extends Component {
     constructor(props){
         super(props);
         this.state = {
+            _id: this.props._id,
             name: this.props.name,
             artist: this.props.artist,
             album: this.props.album,
@@ -20,18 +21,8 @@ class TrackItem extends Component {
             return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
         };
     }
-    addSong = () => {
-        const songData = {
-            name: this.state.name,
-            artist: this.state.artist,
-            album: this.state.album,
-            id: this.state.id,
-            artwork: this.state.artwork,
-            duration_ms: this.state.duration_ms,
-            apple: this.state.apple,
-            uri: this.state.uri
-        };
-        this.props.addSong(songData);
+    remove = () => {
+        this.props.removeTrack(this.state._id);
     };
     render(){
         let url = this.props.artwork;
@@ -56,7 +47,7 @@ class TrackItem extends Component {
                     </div>
                     </div>
                 </button>
-                <button onClick={() => this.addSong()} style={{float: 'center'}}className="btn btn-info">+</button>
+                <button onClick={() => this.remove()} style={{float: 'center'}}className="btn btn-info">-</button>
 
                 <h6>{this.props.name}</h6>
                 <h6>{this.props.artist.toProperCase()}</h6>
@@ -70,8 +61,9 @@ TrackItem.propTypes = {
     duration: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
     artwork: PropTypes.string.isRequired,
-    addSong: PropTypes.func.isRequired,
-    apple: PropTypes.bool.isRequired
+    removeSong: PropTypes.func.isRequired,
+    apple: PropTypes.bool.isRequired,
+    _id: PropTypes.string.isRequired
 };
 
-export default connect(null, {addSong})(TrackItem);
+export default connect(null, {removeTrack})(TrackItem);

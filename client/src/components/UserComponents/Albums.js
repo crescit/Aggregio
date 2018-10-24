@@ -8,7 +8,14 @@ class Albums extends Component {
         this.props.getAlbums();
     }
     render(){
-        return(<div><h1>Albums</h1></div>)
+        let AlbumContent;
+        if(this.props.library.loadingAlbums){
+            AlbumContent = <div><h1>User Albums are loading</h1></div>
+        }
+        if(this.props.library.albums.length === 0){
+            AlbumContent = <div><h1>There are no albums in the user library, you can add albums to your library from the search function. </h1></div>
+        }
+        return(<div><h1>Albums</h1>{AlbumContent}</div>)
     }
 }
 Albums.propTypes = {
