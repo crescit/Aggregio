@@ -10,6 +10,7 @@ import PrivateRoute from './components/common/PrivateRoute';
 import setAuthToken from './utils/setAuthToken';
 import { setCurrentUser, logoutUser } from './actions/authActions';
 import { setCurrentTokens } from './actions/spotifyActions';
+
 //component imports go below
 import LandingPage from './components/layoutcomponents/LandingPage';
 import Footer from './components/layoutcomponents/Footer';
@@ -19,6 +20,10 @@ import Register from './components/authorization/Register';
 import Settings from './components/settings/Settings';
 import SearchResults from './components/Search/SearchResults';
 import Logout from './components/Logout';
+import Songs from './components/UserComponents/Songs';
+import Playlists from './components/UserComponents/Playlists';
+import Albums from './components/UserComponents/Albums';
+
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -80,6 +85,27 @@ class App extends Component {
                   exact
                   path="/logout"
                   component={Logout}
+              />
+          </Switch>
+          <Switch>
+              <PrivateRoute
+                  exact
+                  path="/songs"
+                  component={Songs}
+              />
+          </Switch>
+          <Switch>
+              <PrivateRoute
+                  exact
+                  path="/playlists"
+                  component={Playlists}
+              />
+          </Switch>
+          <Switch>
+              <PrivateRoute
+                  exact
+                  path="/albums"
+                  component={Albums}
               />
           </Switch>
             <Footer/>

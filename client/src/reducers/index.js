@@ -4,10 +4,11 @@ import authReducer from './authReducer';
 import errorReducer from './errorReducer';
 import spotifyReducer from './spotifyReducer';
 import searchReducer from './searchReducer';
-
+import libraryReducer from './libraryReducer';
 export default combineReducers({
     auth: authReducer,
     errors: errorReducer,
     search: searchReducer,
-    spotify: spotifyReducer
+    spotify: spotifyReducer,
+    library: libraryReducer
 });
