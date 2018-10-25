@@ -5,5 +5,4 @@ module.exports = {
         MusicKit: 'MusicKit',
         Spotify: 'Spotify'
     },
-
 };

@@ -59,7 +59,7 @@ export const addSong = (songData) => dispatch => {
     axios.post('/api/songs/library', songData).then(res => dispatch({
         type: ADD_TRACK,
         payload: res.response.data
-    })).catch(err => dispatch({type: GET_ERRORS, payload: err.response.data}));
+    })).catch(err => dispatch({type: GET_ERRORS, payload: err}));
 };
 //add album to album section
 export const addAlbum = (albumData) => dispatch => {
@@ -69,7 +69,7 @@ export const addAlbum = (albumData) => dispatch => {
             type: ADD_TRACK,
             payload: res.response.data
         }))
-        .catch(err => dispatch({type: GET_ERRORS, payload: err.response.data}));
+        .catch(err => dispatch({type: GET_ERRORS, payload: err}));
 };
 //remove album from album section
 export const removeAlbum = (id) => dispatch => {
@@ -78,7 +78,7 @@ export const removeAlbum = (id) => dispatch => {
     axios.delete(`api/songs/albums/${id}`).then(res => dispatch({
         type: REMOVE_ALBUM,
         payload: res.response.data
-    })).catch(err => dispatch({type: GET_ERRORS, payload: err.response.data}));
+    })).catch(err => dispatch({type: GET_ERRORS, payload: err}));
 };
 //remove track from library
 export const removeTrack = (id) => dispatch => {

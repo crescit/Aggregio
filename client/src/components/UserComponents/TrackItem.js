@@ -58,7 +58,7 @@ class TrackItem extends Component {
             playlistContent = <li>No Playlists to add song to</li>
         }else{
             playlistContent = this.props.library.playlists.map(item => (
-                <li className="btn" onClick={() => this.addTo(item._id)}>{item.playlistName}</li>
+                <li key={item._id} className="btn" onClick={() => this.addTo(item._id)}>{item.playlistName}</li>
             ))
         }
 

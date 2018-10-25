@@ -14,7 +14,7 @@ class TrackItem extends Component {
             id: this.props.id,
             duration_ms: this.props.duration,
             apple: false || this.props.apple,
-            uri: "" || this.props.uri
+            uri: "apple" || this.props.uri
         };
         String.prototype.toProperCase = function () {
             return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});

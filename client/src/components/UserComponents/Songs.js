@@ -19,8 +19,8 @@ class Songs extends Component {
         }else{
             SongContent = this.props.library.songs.map(
                 data => (
-                    <Col className="col-3 col-sm-3 col-md-3" key={data._id }>
-                        <TrackItem apple={data.apple} uri={data.uri} key={data.id} name={data.name} artist={data.artist}
+                    <Col className="col-3 col-sm-3 col-md-3" key={data.id }>
+                        <TrackItem apple={data.apple} uri={data.uri} key={data._id} name={data.name} artist={data.artist}
                                    album={data.album} duration={data.duration_ms}
                                    id={data.id} _id={data._id} artwork={data.artwork}/>
                     </Col>

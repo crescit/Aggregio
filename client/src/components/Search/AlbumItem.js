@@ -12,7 +12,7 @@ class AlbumItem extends Component{
             artistName: this.props.artistName,
             albumName: this.props.albumName,
             apple: false || this.props.apple,
-            uri: "" || this.props.uri
+            uri: "apple" || this.props.uri
         }
     }
     addAlbum = () => {
