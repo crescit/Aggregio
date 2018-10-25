@@ -23,8 +23,16 @@ class AlbumItem extends Component{
             artwork: this.state.artwork,
             albumName: this.state.albumName,
             artistName: this.state.artistName
-        }
+        };
         this.props.addAlbum(albumData);
+        this.setState({
+            artistName: null,
+            albumName: null,
+            artwork: null,
+            id: null,
+            apple: null,
+            uri: null
+        })
     };
     render(){
         let url = this.props.artwork;
@@ -42,17 +50,20 @@ class AlbumItem extends Component{
 
         }
         return(
-            <div>
-                <button className="btn btn-dark">
-                    <div className="container1">{imgContent}
-                        <div className="overlay">
-                            <div className="text1"><i className="fa fa-play"></i> </div>
+            <div >
+                {this.state.artistName === null ? null :
+                    <button className="btn btn-dark">
+                        <div className="container1">{imgContent}
+                            <div className="overlay">
+                                <div className="text1"><i className="fa fa-play"></i></div>
+                            </div>
                         </div>
-                    </div></button>
-                <button onClick={() => this.addAlbum()} style={{float: 'center'}}className="btn btn-info">+</button>
-                <h6>{this.state.albumName}</h6>
-                <h6>{this.state.artistName}</h6>
+                    </button>
+                }
+                {this.state.artistName === null ? null : <button onClick={() => this.addAlbum()} style={{float: 'center'}}className="btn btn-info">+</button>}
 
+                <h6>{this.state.artistName}</h6>
+                <h6>{this.state.artistName === null ? null : this.state.albumName.toProperCase()}</h6>
             </div>
         )
     }

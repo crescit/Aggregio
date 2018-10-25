@@ -32,6 +32,16 @@ class TrackItem extends Component {
             uri: this.state.uri
         };
         this.props.addSong(songData);
+        this.setState({
+            name: null,
+            artist: null,
+            album: null,
+            artwork: null,
+            id: null,
+            duration_ms: null,
+            apple: null,
+            uri: null
+        })
     };
     render(){
         let url = this.props.artwork;
@@ -50,16 +60,19 @@ class TrackItem extends Component {
         }
         return(
             <div >
-                <button  className="btn btn-dark">
-                    <div className="container1">{imgContent}<div className="overlay">
-                        <div className="text1"><i className="fa fa-play"></i></div>
-                    </div>
-                    </div>
-                </button>
-                <button onClick={() => this.addSong()} style={{float: 'center'}}className="btn btn-info">+</button>
+                {this.state.artist === null ? null :
+                    <button className="btn btn-dark">
+                        <div className="container1">{imgContent}
+                            <div className="overlay">
+                                <div className="text1"><i className="fa fa-play"></i></div>
+                            </div>
+                        </div>
+                    </button>
+                }
+                {this.state.artist === null ? null : <button onClick={() => this.addSong()} style={{float: 'center'}}className="btn btn-info">+</button>}
 
-                <h6>{this.props.name}</h6>
-                <h6>{this.props.artist.toProperCase()}</h6>
+                <h6>{this.state.name}</h6>
+                <h6>{this.state.artist === null ? null : this.state.artist.toProperCase()}</h6>
             </div>);
     }
 }

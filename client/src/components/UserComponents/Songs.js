@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {getSongs} from "../../actions/libraryActions";
+import TrackItem from './TrackItem';
+import { Container, Row, Col } from 'reactstrap';
 
 class Songs extends Component {
     componentDidMount(){
@@ -14,8 +16,17 @@ class Songs extends Component {
         }
         if(this.props.library.songs.length === 0){
             SongContent = <div><h1>There are no songs in the user library, you can add songs to your library from the search function. </h1></div>
+        }else{
+            SongContent = this.props.library.songs.map(
+                data => (
+                    <Col className="col-3 col-sm-3 col-md-3" key={data._id }>
+                        <TrackItem apple={data.apple} uri={data.uri} key={data.id} name={data.name} artist={data.artist}
+                                   album={data.album} duration={data.duration_ms}
+                                   id={data.id} _id={data._id} artwork={data.artwork}/>
+                    </Col>
+            ));
         }
-        return(<div><h1>Songs</h1>{SongContent}</div>)
+        return(<div><h1>Songs</h1><Container><Row>{SongContent}</Row></Container></div>)
     }
 }
 Songs.propTypes = {

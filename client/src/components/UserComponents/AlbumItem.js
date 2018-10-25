@@ -18,6 +18,7 @@ class AlbumItem extends Component{
     }
     remove = () => {
         this.props.removeAlbum(this.state._id);
+        window.location.reload(true);
     };
     render(){
         let url = this.props.artwork;
@@ -42,7 +43,7 @@ class AlbumItem extends Component{
                             <div className="text1"><i className="fa fa-play"></i> </div>
                         </div>
                     </div></button>
-                <button onClick={() => this.remove()} style={{float: 'center'}}className="btn btn-info">+</button>
+                <button onClick={() => this.remove()} style={{position:'absolute', top:0, left:0}}className="btn badge btn-danger">-</button>
                 <h6>{this.state.albumName}</h6>
                 <h6>{this.state.artistName}</h6>
 
@@ -56,7 +57,7 @@ AlbumItem.propTypes = {
     id: PropTypes.string.isRequired,
     artwork: PropTypes.string.isRequired,
     apple: PropTypes.bool.isRequired,
-    addAlbum: PropTypes.func.isRequired,
+    removeAlbum: PropTypes.func.isRequired,
     _id: PropTypes.string.isRequired
 };
 export default connect(null, {removeAlbum})(AlbumItem);

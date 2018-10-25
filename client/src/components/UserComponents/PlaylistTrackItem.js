@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {removeTrack, addToPlaylist} from "../../actions/libraryActions";
 import {connect} from 'react-redux';
 
-class TrackItem extends Component {
+class PlaylistTrackItem extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -25,20 +25,7 @@ class TrackItem extends Component {
         this.props.removeTrack(this.state._id);
         window.location.reload(true);
     };
-    addTo = (id) => {
-        const songData = {
-            name: this.state.name,
-            artist: this.state.artist,
-            album: this.state.album,
-            id: this.state.id,
-            artwork: this.state.artwork,
-            duration_ms: this.state.duration_ms,
-            apple: this.state.apple,
-            uri: this.state.uri
-        };
-        this.props.addToPlaylist(songData, id);
-        window.location.reload(true);
-    };
+
     render(){
         let url = this.props.artwork;
         var w = url.indexOf("{w}");
@@ -53,14 +40,6 @@ class TrackItem extends Component {
         }else{
             imgContent = <img alt="cover art" style={{height: 128, width: 128}}src={this.state.artwork} />
         }
-        let playlistContent;
-        if(this.props.library.playlists.length === 0){
-            playlistContent = <li>No Playlists to add song to</li>
-        }else{
-            playlistContent = this.props.library.playlists.map(item => (
-                <li className="btn" onClick={() => this.addTo(item._id)}>{item.playlistName}</li>
-            ))
-        }
 
         return(
             <div >
@@ -71,19 +50,12 @@ class TrackItem extends Component {
                     </div>
                 </button>
                 <button onClick={() => this.remove()} style={{position:'absolute', top:0, left:0}}className="btn badge btn-danger">-</button>
-                <div  style={{position:'absolute', top:20, left:0}} className="dropdown">
-                    <button  className="btn btn-primary badge" type="button" data-toggle="dropdown">
-                        +</button>
-                    <ul  className="noCaret dropdown-menu">
-                        <li className="dropdown-header">Add track to playlist:</li>
-                        {playlistContent}
-                    </ul> </div>
                 <h6>{this.props.name}</h6>
                 <h6>{this.props.artist.toProperCase()}</h6>
             </div>);
     }
 }
-TrackItem.propTypes = {
+PlaylistTrackItem.propTypes = {
     name: PropTypes.string.isRequired,
     artist: PropTypes.string.isRequired,
     album: PropTypes.string.isRequired,
@@ -100,4 +72,4 @@ const mapStateToProps = (state) => ({
     library: state.library
 });
 
-export default connect(mapStateToProps, {removeTrack, addToPlaylist})(TrackItem);
+export default connect(mapStateToProps, {removeTrack, addToPlaylist})(PlaylistTrackItem);

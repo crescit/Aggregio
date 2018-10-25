@@ -26,7 +26,6 @@ import Logout from './components/Logout';
 import Songs from './components/UserComponents/Songs';
 import Playlists from './components/UserComponents/Playlists';
 import Albums from './components/UserComponents/Albums';
-import {CLEAR_ERRORS} from "./actions/types";
 
 
 // Check for token
