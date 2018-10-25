@@ -38,7 +38,6 @@ export const getAlbums = () => dispatch => {
 };
 //get playlists
 export const getPlaylists = () => dispatch => {
-    dispatch({type: CLEAR_ERRORS});
 
     dispatch(setPlaylistsLoading());
     axios.get('/api/songs/playlist').then(res => {
@@ -62,7 +61,7 @@ export const addSong = (songData) => dispatch => {
         payload: res.response.data
     })).catch(err => dispatch({type: GET_ERRORS, payload: err.response.data}));
 };
-
+//add album to album section
 export const addAlbum = (albumData) => dispatch => {
     dispatch({type: CLEAR_ERRORS});
     axios.post('api/songs/albums', albumData)
@@ -72,6 +71,7 @@ export const addAlbum = (albumData) => dispatch => {
         }))
         .catch(err => dispatch({type: GET_ERRORS, payload: err.response.data}));
 };
+//remove album from album section
 export const removeAlbum = (id) => dispatch => {
     dispatch({type: CLEAR_ERRORS});
 
@@ -80,6 +80,7 @@ export const removeAlbum = (id) => dispatch => {
         payload: res.response.data
     })).catch(err => dispatch({type: GET_ERRORS, payload: err.response.data}));
 };
+//remove track from library
 export const removeTrack = (id) => dispatch => {
     dispatch({type: CLEAR_ERRORS});
 
@@ -88,6 +89,7 @@ export const removeTrack = (id) => dispatch => {
         payload: res.response.data
     })).catch(err => dispatch({type: GET_ERRORS, payload: err.response.data}));
 };
+//add a track to a specific playlist
 export const addToPlaylist = (songData, id) => dispatch => {
     dispatch({type: CLEAR_ERRORS});
 
@@ -103,7 +105,7 @@ export const addToPlaylist = (songData, id) => dispatch => {
         })
     });
 };
-
+//create a playlsit
 export const createPlaylist = (data) => dispatch => {
     dispatch({type: CLEAR_ERRORS});
     axios.post('api/songs/playlist', data).then(res => {
@@ -118,7 +120,35 @@ export const createPlaylist = (data) => dispatch => {
         })
     });
 };
+//delete a playlist with a specific id
+export const deletePlaylist = (id) => dispatch => {
+    dispatch({type: CLEAR_ERRORS});
+    axios.delete(`api/songs/playlist/${id}`).then(res => {
+        dispatch({
+            type: DELETE_PLAYLIST,
+            payload: res.response.data
+        })
+    }).catch(err =>{
+        dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+        })});
+};
+//remove a specific track from a playlist
+export const removeTrackFromPlaylist = (playlistId, id) => dispatch => {
+    dispatch({type: CLEAR_ERRORS});
+    axios.delete(`api/songs/removeFromPlaylist/${playlistId}/${id}`).then(res => {
+        dispatch({
+            type: REMOVE_FROM_PLAYLIST,
+            payload: res.response.data
+        })
+    }).catch(err =>{
+        dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+        })})
 
+};
 export const setTracksLoading = () => {
     return {
         type: LOADING_TRACKS

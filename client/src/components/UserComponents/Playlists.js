@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {getPlaylists, createPlaylist} from "../../actions/libraryActions";
+import {getPlaylists, createPlaylist, deletePlaylist} from "../../actions/libraryActions";
 import PlaylistTrackItem from './PlaylistTrackItem';
 import { Container, Row, Col } from 'reactstrap';
 
@@ -11,7 +11,7 @@ class Playlists extends Component {
         this.state = {
             selectedPlaylist : "",
             value: ""
-        }
+        };
     }
     componentDidMount(){
         this.props.getPlaylists();
@@ -23,14 +23,15 @@ class Playlists extends Component {
         this.props.createPlaylist(body);
         window.location.reload(true);
     };
-    onChange = (e) => {
+    handleChange = (e) => {
         this.setState({value: e.target.value});
     };
     choose = (id) => {
         this.setState({selectedPlaylist: id});
     };
     onDelete = (id) => {
-
+        this.props.deletePlaylist(id);
+        window.location.reload(true);
     };
     render(){
         let PlaylistContent;
@@ -58,20 +59,20 @@ class Playlists extends Component {
 
                     SongContent = this.props.library.playlists[index].songs.map(data => (
                         <Col className="col-3 col-sm-3 col-md-3" key={data._id}>
-                            <PlaylistTrackItem apple={data.apple} uri={data.uri} key={data.id} name={data.name} artist={data.artist}
+                            <PlaylistTrackItem _playlistid={this.props.library.playlists[index]._id} apple={data.apple} uri={data.uri} key={data.id} name={data.name} artist={data.artist}
                                        album={data.album} duration={data.duration_ms}
                                        id={data.id} _id={data._id} artwork={data.artwork}/>
                         </Col>
 
                     ));
-                DeleteButton = <button onClick={() => this.onDelete(this.props.library.playlist[index]._id)} className="btn btn-danger btn-block"> DELETE PLAYLIST</button>
+                DeleteButton = <button onClick={() => this.onDelete(this.props.library.playlists[index]._id)} className="btn btn-danger btn-block"> DELETE PLAYLIST</button>
             }
 
         }
         return(<div>
             <h1>Playlists</h1>
 
-            <input onChange={() => this.onChange} value={this.state.value} placeholder="Name for a New Playlist"></input>
+            <input onChange={this.handleChange} value={this.state.value} placeholder="Name for a New Playlist"></input>
             <button onClick={() => this.create()}className="btn btn-bar btn-info"> Create Playlist</button>
             <hr/>
             <ul className="nav navbar-pills nav-stacked">
@@ -89,9 +90,10 @@ class Playlists extends Component {
 Playlists.propTypes = {
     library: PropTypes.object.isRequired,
     getPlaylists: PropTypes.func.isRequired,
-    createPlaylist: PropTypes.func.isRequired
+    createPlaylist: PropTypes.func.isRequired,
+    deletePlaylist: PropTypes.func.isRequired
 };
 const mapStateToProps = (state) => ({
     library: state.library
 });
-export default connect(mapStateToProps, {getPlaylists, createPlaylist})(Playlists);
+export default connect(mapStateToProps, {getPlaylists, createPlaylist, deletePlaylist})(Playlists);

@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {removeTrack, addToPlaylist} from "../../actions/libraryActions";
+import {removeTrackFromPlaylist } from "../../actions/libraryActions";
 import {connect} from 'react-redux';
 
 class PlaylistTrackItem extends Component {
     constructor(props){
         super(props);
         this.state = {
+            _playlistid: this.props._playlistid,
             _id: this.props._id,
             name: this.props.name,
             artist: this.props.artist,
@@ -22,7 +23,7 @@ class PlaylistTrackItem extends Component {
         };
     }
     remove = () => {
-        this.props.removeTrack(this.state._id);
+        this.props.removeTrackFromPlaylist(this.state._playlistid, this.state._id)
         window.location.reload(true);
     };
 
@@ -62,14 +63,14 @@ PlaylistTrackItem.propTypes = {
     duration: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
     artwork: PropTypes.string.isRequired,
-    removeTrack: PropTypes.func.isRequired,
+    removeTracksFromPlaylist: PropTypes.func.isRequired,
     apple: PropTypes.bool.isRequired,
     _id: PropTypes.string.isRequired,
     library: PropTypes.object.isRequired,
-    addToPlaylist: PropTypes.func.isRequired
+    _playlistid: PropTypes.string.isRequired
 };
 const mapStateToProps = (state) => ({
     library: state.library
 });
 
-export default connect(mapStateToProps, {removeTrack, addToPlaylist})(PlaylistTrackItem);
+export default connect(mapStateToProps, {removeTrackFromPlaylist})(PlaylistTrackItem);
