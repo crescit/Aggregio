@@ -23,8 +23,8 @@ class AppleMusicPlayer extends Component {
     onPlayClick = (music) => {
         music.player.play();
     };
-    onPrevClick = (music) => {
-        music.player.skipToPreviousItem();
+    onPauseClick = (music) => {
+        music.player.pause();
     };
     render(){
 
