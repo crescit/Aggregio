@@ -2,20 +2,6 @@ import React , {Component} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
-
-
-/*
-     playCarly(){
-        axios.put('https://api.spotify.com/v1/me/player/play',
-            {
-                "context_uri" : 'spotify:album:5ht7ItJgpBH7W6vJ5BqpPr'},{
-                headers: {
-                    Authorization: 'Bearer ' + this.state.token
-                }
-            })
-            .then().catch(err => console.log(err));
-    }
- */
 class AppleMusicPlayer extends Component {
     constructor(props){
         super(props);

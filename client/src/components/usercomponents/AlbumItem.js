@@ -21,15 +21,9 @@ class AlbumItem extends Component{
         window.location.reload(true);
     };
     render(){
-        let url = this.props.artwork;
-        var w = url.indexOf("{w}");
-        var h = url.indexOf("{h}");
-        let first = url.slice(0, w) + '128x';
-        let second = '128' + url.slice(h + 3, url.length);
-        url = first + second;
         let imgContent;
         if(this.state.apple){
-            imgContent = <img alt="cover art" style={{height: 128, width: 128}}src={url} />;
+            imgContent = <img alt="cover art" style={{height: 128, width: 128}}src={this.props.artwork} />;
 
         }else{
             imgContent = <img alt="cover art" style={{height: 128, width: 128}}src={this.state.artwork} />

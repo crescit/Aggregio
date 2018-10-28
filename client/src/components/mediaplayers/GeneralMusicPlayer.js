@@ -8,7 +8,7 @@ import axios from 'axios';
 class GeneralMusicPlayer extends Component{
 
     spotifyCallBack = (loaded) => {
-        if(loaded == true){
+        if(loaded === true){
             this.setQueue();
         }
     };
@@ -28,23 +28,19 @@ class GeneralMusicPlayer extends Component{
     render(){
         let queue = this.props.queue.queue;
         let playerContent;
-        let visibleApple;
-        let visibleSpotify;
 
         if(queue.length === 0){
             playerContent = <h5>No items in the queue</h5>;
-            visibleApple = {display: 'none'};
-            visibleSpotify = {display: 'none'};
+
         }else{
             //if current album or song is apple display apple player
             if(queue[0].apple){
-                visibleSpotify = {display: 'none'};
+                playerContent = <AppleMusicPlayer/>
             }else{
-                visibleApple = {display: 'none'};
-
+                playerContent = <SpotifyPlayer/>
             }
         }
-        return(<div>{playerContent} <div style={visibleApple}>< AppleMusicPlayer/></div><div style={visibleSpotify}>< SpotifyPlayer callBack={this.spotifyCallBack}/></div></div>)
+        return(<div>{playerContent}</div>)
     }
 
 }

@@ -17,11 +17,17 @@ class AlbumItem extends Component{
         }
     }
     addAlbum = (url) => {
+        let art;
+        if (this.state.apple === true){
+            art = url;
+        }else{
+            art = this.state.artwork
+        }
         const albumData = {
             id: this.state.id,
             apple: this.state.apple,
             uri: this.state.uri,
-            artwork: url,
+            artwork: art,
             albumName: this.state.albumName,
             artistName: this.state.artistName
         };
@@ -57,10 +63,8 @@ class AlbumItem extends Component{
         let imgContent;
         if(this.state.apple){
             imgContent = <img alt="cover art" style={{height: 128, width: 128}}src={url} />;
-
         }else{
             imgContent = <img alt="cover art" style={{height: 128, width: 128}}src={this.state.artwork} />
-
         }
         return(
             <div >

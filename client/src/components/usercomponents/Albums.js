@@ -21,7 +21,7 @@ class Albums extends Component {
             AlbumContent = this.props.library.albums.map(
                 data => (
                     <Col className="col-3 col-sm-3 col-md-3" key={data._id}>
-                        <AlbumItem apple={data.apple} uri={data.uri} key={data.id} artistName={data.artistName}
+                        <AlbumItem apple={data.apple} uri={data.uri} key={data._id} artistName={data.artistName}
                                    albumName={data.albumName} duration={data.duration_ms}
                                    id={data.id} _id={data._id} artwork={data.artwork}/>
                     </Col>
