@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import {Container, Row, Col} from 'reactstrap';
+
 class SpotifyPlayer extends Component {
     constructor(props) {
         super(props);
@@ -177,15 +179,22 @@ class SpotifyPlayer extends Component {
 
                 {loggedIn ?
                     (<div>
-                        <img alt="track cover art" style={{height : "128px", width : "128px" }}src={albumArtWork}/>
-                        <p style={{color: 'white'}}>Artist: {artistName}
-                        Track: {trackName}
-                        Album: {albumName}</p>
+                        <Container>
+                            <Row><Col>
+                                <img alt="track cover art" style={{height : "128px", width : "128px" }}src={albumArtWork}/></Col>
+                                <Col>
+                                    <p> Track: {trackName} </p>
+                                    <p>Artist: {artistName}</p>
+                            <p>Album: {albumName}</p></Col>
+                            </Row>
+                            <Row>
                         <p>
-                            <button onClick={() => this.onPrevClick()}>Previous</button>
-                            <button onClick={() => this.onPlayClick()}>{playing ? "Pause" : "Play"}</button>
-                            <button onClick={() => this.onNextClick()}>Next</button>
+                            <button className="btn btn-round btn-light" onClick={() => this.onPrevClick()}>Previous</button>
+                            <button className="btn btn-round btn-light" onClick={() => this.onPlayClick()}>{playing ? "Pause" : "Play"}</button>
+                            <button className="btn btn-round btn-light" onClick={() => this.onNextClick()}>Next</button>
                         </p>
+                            </Row>
+                        </Container>
                     </div>)
                     :
                     (<div>
