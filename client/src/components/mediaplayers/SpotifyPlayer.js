@@ -42,7 +42,7 @@ class SpotifyPlayer extends Component {
         if (this.state.token !== "") {
             // change the loggedIn variable, then start checking for the window.Spotify variable
             this.setState({ loggedIn: true });
-            this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 1000);
+            this.playerCheckInterval = setInterval(() => {this.checkForPlayer()}, 1500);
         }
     }
 
@@ -120,7 +120,6 @@ class SpotifyPlayer extends Component {
             });
             // set up the player's event handlers
             this.createEventHandlers();
-
             // finally, connect!
             this.player.connect();
         }

@@ -8,7 +8,7 @@ import jwt_decode from 'jwt-decode';
 
 
 
-import Main from './components/MainPage/Main';
+import Main from './components/mainpage/Main';
 import PrivateRoute from './components/common/PrivateRoute';
 import setAuthToken from './utils/setAuthToken';
 import { setCurrentUser, logoutUser } from './actions/authActions';
@@ -21,13 +21,13 @@ import NavigationBar from './components/layoutcomponents/NavigationBar';
 import Login from './components/authorization/Login';
 import Register from './components/authorization/Register';
 import Settings from './components/settings/Settings';
-import SearchResults from './components/Search/SearchResults';
+import SearchResults from './components/search/SearchResults';
 import Logout from './components/Logout';
-import Songs from './components/UserComponents/Songs';
-import Playlists from './components/UserComponents/Playlists';
-import Albums from './components/UserComponents/Albums';
-import GeneralMusicPlayer from './components/MediaPlayers/GeneralMusicPlayer';
-
+import Songs from './components/usercomponents/Songs';
+import Playlists from './components/usercomponents/Playlists';
+import Albums from './components/usercomponents/Albums';
+import GeneralMusicPlayer from './components/mediaplayers/GeneralMusicPlayer';
+import {clearErrors} from "./actions/errorActions";
 // Check for token
 if (localStorage.jwtToken) {
 
@@ -40,6 +40,7 @@ if (localStorage.jwtToken) {
     // Set user and isAuthenticated
     store.dispatch(setCurrentUser(decoded));
     store.dispatch(setCurrentTokens(tokens));
+    store.dispatch(clearErrors());
     // Check for expired token
     const currentTime = Date.now() / 1000;
     if (decoded.exp < currentTime) {
@@ -112,7 +113,10 @@ class App extends Component {
                   component={Albums}
               />
           </Switch>
-          <GeneralMusicPlayer/>
+          <Switch>
+              <PrivateRoute component={GeneralMusicPlayer}
+         />
+          </Switch>
             <Footer/>
       </div>
         </Router>

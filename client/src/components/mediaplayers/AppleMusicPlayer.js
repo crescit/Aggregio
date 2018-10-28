@@ -41,6 +41,7 @@ class AppleMusicPlayer extends Component {
         music.player.skipToPreviousItem();
     };
 
+
     render(){
 
         let {music}  = this.state;
@@ -48,14 +49,18 @@ class AppleMusicPlayer extends Component {
         let imgContent;
         //if queues duration field is undefined then the queue item is an album else its a song
         if(queue[0] !== undefined && queue[0].duration_ms !== undefined) {
+
             music.setQueue({
                 song: queue[0].id
             });
+
             imgContent = <img style={{height: '128px', width: '128px'}} src={queue[0].artwork} alt="coverart" />
         }else{
+
             music.setQueue({
                 album: queue[0].id
             });
+
             imgContent = <img style={{height: '128px', width: '128px'}} src={queue[0].artwork} alt="coverart" />
 
         }

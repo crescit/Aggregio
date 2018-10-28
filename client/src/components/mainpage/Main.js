@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {loginSpotify} from "../../actions/spotifyActions";
 import {isEmpty} from '../../validation/is-empty';
-import SpotifyPlayer from '../MediaPlayers/SpotifyPlayer';
-import AppleMusicPlayer from '../MediaPlayers/AppleMusicPlayer';
+import SpotifyPlayer from '../mediaplayers/SpotifyPlayer';
+import AppleMusicPlayer from '../mediaplayers/AppleMusicPlayer';
 import SearchBar from './SearchBar';
 
 

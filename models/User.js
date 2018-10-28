@@ -4,10 +4,6 @@ const Schema = mongoose.Schema;
 
 //create Schema
 const UserSchema = new Schema({
-    song: {
-        type: Schema.Types.ObjectId,
-        ref: 'song'
-    },
     name: {
         type: String,
         required: true
