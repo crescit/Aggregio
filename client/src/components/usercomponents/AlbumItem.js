@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {removeAlbum} from "../../actions/libraryActions";
 import {connect} from 'react-redux';
+import {addSongToQueue, clearQueue} from "../../actions/queueActions";
 
 class AlbumItem extends Component{
     constructor(props){
@@ -20,6 +21,18 @@ class AlbumItem extends Component{
         this.props.removeAlbum(this.state._id);
         window.location.reload(true);
     };
+    play = () => {
+        this.props.clearQueue();
+        const albumData = {
+            artistName: this.state.artistName,
+            albumName: this.state.albumName,
+            id: this.state.id,
+            artwork: this.props.artwork,
+            apple: this.state.apple,
+            uri: this.state.uri
+        };
+        this.props.addSongToQueue(albumData);
+    };
     render(){
         let imgContent;
         if(this.state.apple){
@@ -31,7 +44,7 @@ class AlbumItem extends Component{
         }
         return(
             <div>
-                <button className="btn btn-dark">
+                <button onClick={() => this.play()} className="btn btn-dark">
                     <div className="container1">{imgContent}
                         <div className="overlay">
                             <div className="text1"><i className="fa fa-play"></i> </div>
@@ -52,6 +65,8 @@ AlbumItem.propTypes = {
     artwork: PropTypes.string.isRequired,
     apple: PropTypes.bool.isRequired,
     removeAlbum: PropTypes.func.isRequired,
-    _id: PropTypes.string.isRequired
+    _id: PropTypes.string.isRequired,
+    addSongToQueue: PropTypes.func.isRequired,
+    clearQueue: PropTypes.func.isRequired
 };
-export default connect(null, {removeAlbum})(AlbumItem);
+export default connect(null, {removeAlbum, addSongToQueue, clearQueue})(AlbumItem);

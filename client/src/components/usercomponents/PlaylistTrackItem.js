@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {removeTrackFromPlaylist } from "../../actions/libraryActions";
 import {connect} from 'react-redux';
+import {addSongToQueue, clearQueue} from "../../actions/queueActions";
 
 class PlaylistTrackItem extends Component {
     constructor(props){
@@ -26,6 +27,20 @@ class PlaylistTrackItem extends Component {
         this.props.removeTrackFromPlaylist(this.state._playlistid, this.state._id)
         window.location.reload(true);
     };
+    play = () => {
+        this.props.clearQueue();
+        const songData = {
+            name: this.state.name,
+            artist: this.state.artist,
+            album: this.state.album,
+            id: this.state.id,
+            artwork: this.props.artwork,
+            duration_ms: this.state.duration_ms,
+            apple: this.state.apple,
+            uri: this.state.uri
+        };
+        this.props.addSongToQueue(songData);
+    };
 
     render(){
         let imgContent;
@@ -38,7 +53,7 @@ class PlaylistTrackItem extends Component {
 
         return(
             <div >
-                <button  className="btn btn-dark">
+                <button  onClick={() => this.play()} className="btn btn-dark">
                     <div className="container1">{imgContent}<div className="overlay">
                         <div className="text1"><i className="fa fa-play"></i></div>
                     </div>
@@ -61,10 +76,12 @@ PlaylistTrackItem.propTypes = {
     apple: PropTypes.bool.isRequired,
     _id: PropTypes.string.isRequired,
     library: PropTypes.object.isRequired,
-    _playlistid: PropTypes.string.isRequired
+    _playlistid: PropTypes.string.isRequired,
+    addSongToQueue: PropTypes.func.isRequired,
+    clearQueue: PropTypes.func.isRequired
 };
 const mapStateToProps = (state) => ({
     library: state.library
 });
 
-export default connect(mapStateToProps, {removeTrackFromPlaylist})(PlaylistTrackItem);
+export default connect(mapStateToProps, {removeTrackFromPlaylist,  addSongToQueue, clearQueue})(PlaylistTrackItem);
