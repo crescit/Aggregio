@@ -177,10 +177,10 @@ class SpotifyPlayer extends Component {
 
                 {loggedIn ?
                     (<div>
-                        <img alt="track cover art" style={{height : "256px", width : "256px" }}src={albumArtWork}/>
-                        <p style={{color: 'white'}}>Artist: {artistName}</p>
-                        <p style={{color: 'white'}}>Track: {trackName}</p>
-                        <p style={{color: 'white'}}>Album: {albumName}</p>
+                        <img alt="track cover art" style={{height : "128px", width : "128px" }}src={albumArtWork}/>
+                        <p style={{color: 'white'}}>Artist: {artistName}
+                        Track: {trackName}
+                        Album: {albumName}</p>
                         <p>
                             <button onClick={() => this.onPrevClick()}>Previous</button>
                             <button onClick={() => this.onPlayClick()}>{playing ? "Pause" : "Play"}</button>
