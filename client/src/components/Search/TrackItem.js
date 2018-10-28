@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {addSong} from "../../actions/libraryActions";
+import {addSongToQueue, clearQueue} from "../../actions/queueActions";
 import {connect} from 'react-redux';
 
 class TrackItem extends Component {
@@ -14,19 +15,19 @@ class TrackItem extends Component {
             id: this.props.id,
             duration_ms: this.props.duration,
             apple: false || this.props.apple,
-            uri: "apple" || this.props.uri
+            uri: this.props.uri || "apple"
         };
         String.prototype.toProperCase = function () {
             return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
         };
     }
-    addSong = () => {
+    addSong = (url) => {
         const songData = {
             name: this.state.name,
             artist: this.state.artist,
             album: this.state.album,
             id: this.state.id,
-            artwork: this.state.artwork,
+            artwork: url,
             duration_ms: this.state.duration_ms,
             apple: this.state.apple,
             uri: this.state.uri
@@ -42,6 +43,20 @@ class TrackItem extends Component {
             apple: null,
             uri: null
         })
+    };
+    play = (url) => {
+        this.props.clearQueue();
+        const songData = {
+            name: this.state.name,
+            artist: this.state.artist,
+            album: this.state.album,
+            id: this.state.id,
+            artwork: url,
+            duration_ms: this.state.duration_ms,
+            apple: this.state.apple,
+            uri: this.state.uri
+        };
+        this.props.addSongToQueue(songData);
     };
     render(){
         let url = this.props.artwork;
@@ -61,7 +76,7 @@ class TrackItem extends Component {
         return(
             <div >
                 {this.state.artist === null ? null :
-                    <button className="btn btn-dark">
+                    <button onClick={() => this.play(url)} className="btn btn-dark">
                         <div className="container1">{imgContent}
                             <div className="overlay">
                                 <div className="text1"><i className="fa fa-play"></i></div>
@@ -69,7 +84,7 @@ class TrackItem extends Component {
                         </div>
                     </button>
                 }
-                {this.state.artist === null ? null : <button onClick={() => this.addSong()} style={{float: 'center'}}className="btn btn-info">+</button>}
+                {this.state.artist === null ? null : <button onClick={() => this.addSong(url)} style={{float: 'center'}}className="btn btn-info">+</button>}
 
                 <h6>{this.state.name}</h6>
                 <h6>{this.state.artist === null ? null : this.state.artist.toProperCase()}</h6>
@@ -84,7 +99,9 @@ TrackItem.propTypes = {
     id: PropTypes.string.isRequired,
     artwork: PropTypes.string.isRequired,
     addSong: PropTypes.func.isRequired,
-    apple: PropTypes.bool.isRequired
+    apple: PropTypes.bool.isRequired,
+    addSongToQueue: PropTypes.func.isRequired,
+    clearQueue: PropTypes.func.isRequired
 };
 
-export default connect(null, {addSong})(TrackItem);
+export default connect(null, {addSong, addSongToQueue, clearQueue})(TrackItem);

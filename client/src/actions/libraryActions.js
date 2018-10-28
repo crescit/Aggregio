@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {GET_ALBUMS, GET_ERRORS, CLEAR_ERRORS, GET_PLAYLISTS, GET_TRACKS, LOADING_ALBUMS, LOADING_PLAYLISTS, LOADING_TRACKS, ADD_TRACK, REMOVE_ALBUM, REMOVE_TRACK, REMOVE_FROM_PLAYLIST, ADD_TO_PLAYLIST, DELETE_PLAYLIST, CREATE_PLAYLIST} from "../actions/types";
+import {GET_ALBUMS, GET_ERRORS, CLEAR_ERRORS, GET_PLAYLISTS, GET_TRACKS, LOADING_ALBUMS, LOADING_PLAYLISTS, LOADING_TRACKS, ADD_TRACK, REMOVE_ALBUM, REMOVE_TRACK, REMOVE_FROM_PLAYLIST, ADD_TO_PLAYLIST, DELETE_PLAYLIST, CREATE_PLAYLIST, ADD_ALBUM} from "../actions/types";
 
 //get songs
 export const getSongs = () => dispatch => {
@@ -66,7 +66,7 @@ export const addAlbum = (albumData) => dispatch => {
     dispatch({type: CLEAR_ERRORS});
     axios.post('api/songs/albums', albumData)
         .then(res => dispatch({
-            type: ADD_TRACK,
+            type: ADD_ALBUM,
             payload: res.response.data
         }))
         .catch(err => dispatch({type: GET_ERRORS, payload: err}));

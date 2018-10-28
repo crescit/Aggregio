@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {addAlbum} from "../../actions/libraryActions";
 import {connect} from 'react-redux';
+import {addSongToQueue, clearQueue} from "../../actions/queueActions";
 
 class AlbumItem extends Component{
     constructor(props){
@@ -12,15 +13,15 @@ class AlbumItem extends Component{
             artistName: this.props.artistName,
             albumName: this.props.albumName,
             apple: false || this.props.apple,
-            uri: "apple" || this.props.uri
+            uri: this.props.uri || "apple"
         }
     }
-    addAlbum = () => {
+    addAlbum = (url) => {
         const albumData = {
             id: this.state.id,
             apple: this.state.apple,
             uri: this.state.uri,
-            artwork: this.state.artwork,
+            artwork: url,
             albumName: this.state.albumName,
             artistName: this.state.artistName
         };
@@ -33,6 +34,18 @@ class AlbumItem extends Component{
             apple: null,
             uri: null
         })
+    };
+    play = (url) => {
+        this.props.clearQueue();
+        const albumData = {
+            artistName: this.state.artistName,
+            albumName: this.state.albumName,
+            id: this.state.id,
+            artwork: url,
+            apple: this.state.apple,
+            uri: this.state.uri
+        };
+        this.props.addSongToQueue(albumData);
     };
     render(){
         let url = this.props.artwork;
@@ -52,7 +65,7 @@ class AlbumItem extends Component{
         return(
             <div >
                 {this.state.artistName === null ? null :
-                    <button className="btn btn-dark">
+                    <button onClick={() => this.play(url)} className="btn btn-dark">
                         <div className="container1">{imgContent}
                             <div className="overlay">
                                 <div className="text1"><i className="fa fa-play"></i></div>
@@ -60,7 +73,7 @@ class AlbumItem extends Component{
                         </div>
                     </button>
                 }
-                {this.state.artistName === null ? null : <button onClick={() => this.addAlbum()} style={{float: 'center'}}className="btn btn-info">+</button>}
+                {this.state.artistName === null ? null : <button onClick={() => this.addAlbum(url)} style={{float: 'center'}}className="btn btn-info">+</button>}
 
                 <h6>{this.state.artistName}</h6>
                 <h6>{this.state.artistName === null ? null : this.state.albumName.toProperCase()}</h6>
@@ -74,6 +87,8 @@ AlbumItem.propTypes = {
     id: PropTypes.string.isRequired,
     artwork: PropTypes.string.isRequired,
     apple: PropTypes.bool.isRequired,
-    addAlbum: PropTypes.func.isRequired
+    addAlbum: PropTypes.func.isRequired,
+    addSongToQueue: PropTypes.func.isRequired,
+    clearQueue: PropTypes.func.isRequired
 };
-export default connect(null, {addAlbum})(AlbumItem);
+export default connect(null, {addAlbum,addSongToQueue, clearQueue})(AlbumItem);

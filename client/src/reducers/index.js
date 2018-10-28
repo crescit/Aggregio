@@ -5,10 +5,12 @@ import errorReducer from './errorReducer';
 import spotifyReducer from './spotifyReducer';
 import searchReducer from './searchReducer';
 import libraryReducer from './libraryReducer';
+import queueReducer from './queueReducer';
 export default combineReducers({
     auth: authReducer,
     errors: errorReducer,
     search: searchReducer,
     spotify: spotifyReducer,
-    library: libraryReducer
+    library: libraryReducer,
+    queue: queueReducer
 });
